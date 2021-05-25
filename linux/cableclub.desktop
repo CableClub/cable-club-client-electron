@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=CableClub Desktop App
+Comment=OAuth Private URI Scheme Sample Application
+Exec=/home/connor/workspace/sixtyeightplus.one/cableclub-client-electron/dist/cableclub-0.0.0.AppImage %U
+Terminal=false
+MimeType=text/html;x-scheme-handler/x-cableclub
