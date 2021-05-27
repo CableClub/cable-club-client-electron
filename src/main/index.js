@@ -4,9 +4,6 @@ import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
 import log from 'electron-log'
-import WebSocket from 'ws'
-import SerialPort from 'serialport'
-import { Socket } from 'phoenix'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -16,30 +13,6 @@ const primaryInstance = app.requestSingleInstanceLock();
 if (!primaryInstance) {
   app.quit();
 }
-
-let socket = new Socket("ws://localhost:4000/usb", { transport: WebSocket });
-let channel = socket.channel("usb:v1", { session_code: '123456', session_token: 'j5Db1OuPOr35VbXuwWBiqsmQicODgc2GEVL_vjL3ReM=' })
-
-channel.join()
-  .receive("ok", ({ data }) => log.debug("channel connected", data))
-  .receive("error", ({ reason }) => log.debug("failed join", reason))
-  .receive("timeout", () => log.debug("Networking issue. Still waiting..."))
-
-let uart = new SerialPort('/dev/ttyUSB1', {
-  baudRate: 115200
-})
-
-uart.on('readable', function () {
-  channel.push("exchange_byte", { data: uart.read(1)[0] })
-})
-
-channel.on("exchange_byte", (payload) => {
-  uart.write([payload.data], (error) => {
-    log.error(error)
-  })
-})
-
-socket.connect();
 
 // Set this to avoid a warning and to improve performance
 app.allowRendererProcessReuse = true;

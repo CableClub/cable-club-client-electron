@@ -6,20 +6,26 @@
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "test": "jest"
   },
   "dependencies": {
     "electron-log": "^4.3.5",
     "electron-rebuild": "^2.3.5",
+    "keytar": "^7.7.0",
     "phoenix": "^1.5.9",
     "serialport": "^9.0.8",
     "source-map-support": "^0.5.16",
     "ws": "^6.2.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "babel-jest": "^27.0.1",
     "electron": "8.2.0",
     "electron-builder": "^22.4.1",
     "electron-webpack": "^2.8.2",
+    "jest": "^27.0.1",
     "webpack": "~4.42.1"
   },
   "build": {
